@@ -84,24 +84,24 @@ const updateDisplay = (data) => {
   const weeklyForecastHTML = createWeeklyForecastHTML(data.list);
   displayElement.classList.remove("hidden");
   displayElement.innerHTML = `
-    <h1 class="text-center text-white text-5xl font-bold mt-10">Weather Details</h1>
-    <div class="flex justify-around my-10 items-center w-full">
-      <div class="flex flex-col text-3xl text-[#EAEAEA] gap-y-2">
-        <h2 class="font-bold text-4xl text-white">${cityName} - ${date}</h2>
-        <span>${capitalize(description)}</span>
-        <span>Nhiệt độ: ${temperature}°C</span>
-        <span>Độ ẩm: ${humidity}%</span>
-        <span>Sức gió: ${(windSpeed * 3.6).toFixed(1)} km/h</span>
-      </div>
-      <img src="${iconURL}" alt="weather icon" class="w-[250px] h-[250px] translate-y-[-50px] object-cover" />
+  <h1 class="text-center text-white text-4xl sm:text-5xl font-bold mt-10">Weather Details</h1>
+  <div class="flex flex-col lg:flex-row justify-around my-10 items-center w-full">
+    <div class="flex flex-col text-xl sm:text-2xl lg:text-3xl text-[#EAEAEA] gap-y-2">
+      <h2 class="font-bold text-3xl sm:text-4xl text-white">${cityName} - ${date}</h2>
+      <span>${capitalize(description)}</span>
+      <span>Nhiệt độ: ${temperature}°C</span>
+      <span>Độ ẩm: ${humidity}%</span>
+      <span>Sức gió: ${(windSpeed * 3.6).toFixed(1)} km/h</span>
     </div>
-    <div class="grid bg-purple-600 w-[75%] sm:w-full max-[640px]:text-sm h-[350px] grid-cols-4 gap-x-4 text-center rounded-lg my-5 text-lg ">
-      ${hourlyForecastHTML}
-    </div>
-    <div class="grid bg-purple-600 w-[75%] sm:w-full max-[640px]:text-sm h-[250px] grid-cols-5 gap-x-4 text-center rounded-lg my-5 text-lg ">
-      ${weeklyForecastHTML}
-    </div>
-  `;
+    <img src="${iconURL}" alt="weather icon" class="w-[150px] sm:w-[200px] lg:w-[250px] h-[150px] sm:h-[200px] lg:h-[250px] translate-y-[-30px] sm:translate-y-[-40px] lg:translate-y-[-50px] object-cover" />
+  </div>
+  <div class="grid bg-purple-600 w-[90%] min-w-max lg:w-[75%] max-w-full text-sm sm:text-base lg:text-lg h-[350px] max-h-max grid-cols-3 sm:grid-cols-4 gap-4 text-center rounded-lg my-5">
+    ${hourlyForecastHTML}
+  </div>
+  <div class="grid bg-purple-600 w-[90%] min-w-max lg:w-[75%] max-w-full text-sm sm:text-base lg:text-lg h-[250px] max-h-max grid-cols-3 sm:grid-cols-5 gap-4 text-center rounded-lg my-5">
+    ${weeklyForecastHTML}
+  </div>
+`;
 };
 
 const fetchData = async (location) => {
