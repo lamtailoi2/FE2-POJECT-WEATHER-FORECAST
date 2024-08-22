@@ -3,10 +3,38 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+    />
+    <link rel="icon" type="image/x-icon" href="/images/favicon.ico" />
     <script src="https://cdn.tailwindcss.com"></script>
     <title>Weather App</title>
   </head>
-  <body>
-    <h1 class="text-3xl font-bold underline">Hello world!</h1>
+  <body class="bg-purple-700 flex justify-center items-center mt-10">
+    <div class="w-[500px] h-full bg-purple-500 rounded-lg">
+      <h1 class="text-center text-white text-5xl font-bold mt-10">
+        Weather App
+      </h1>
+      <h1 class="text-center text-white text-5xl font-bold mt-5">
+        <i class="fa-solid fa-cloud"></i>
+      </h1>
+      <form class="flex justify-center items-center flex-col my-10">
+        <input
+          class="border-none rounded w-[350px] h-10 pl-5 focus:outline-none"
+          type="text"
+          placeholder="Enter city name..."
+          id="city"
+          name="city"
+        />
+        <button
+          type="submit"
+          class="rounded bg-purple-300 w-[100px] h-[35px] mt-5 text-white font-bold"
+        >
+          Search
+        </button>
+      </form>
+    </div>
+    <script src="/src/scripts/scripts.js"></script>
   </body>
 </html>
