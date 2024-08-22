@@ -5,12 +5,8 @@ displayElement.classList.add("hidden");
 const handleSubmit = (e) => {
   e.preventDefault();
   const location = searchInput.value.trim();
-  if (!location) {
-    alert("Please enter a location");
-  } else {
-    fetchData(location);
-    searchInput.value = "";
-  }
+  !location ? alert("Please enter a city name") : fetchData(location);
+  searchInput.value = "";
 };
 
 const formatDate = (date) => {
@@ -40,7 +36,7 @@ const createHourlyForecastHTML = (forecastData) => {
     .map(({ dt_txt, weather, main, wind }) => {
       return `
         <div class="flex flex-col items-center justify-center text-white">
-          <span>${formatTime(dt_txt)}</span>
+          <span class="font-bold">${formatTime(dt_txt)}</span>
           <img src="http://openweathermap.org/img/w/${
             weather[0].icon
           }.png" alt="weather icon" class="w-[50px] h-[50px] object-cover" />
@@ -62,7 +58,9 @@ const createWeeklyForecastHTML = (forecastData) => {
     .map(({ dt_txt, weather, main, wind }) => {
       return `
           <div class="flex flex-col items-center justify-center text-white">
-            <span>${formatWeekday(dt_txt)}</span>  <!-- Display the weekday -->
+            <span class="font-bold">${formatWeekday(
+              dt_txt
+            )}</span>  <!-- Display the weekday -->
             <img src="http://openweathermap.org/img/w/${
               weather[0].icon
             }.png" alt="weather icon" class="w-[50px] h-[50px] object-cover" />
@@ -80,7 +78,7 @@ const updateDisplay = (data) => {
   const { speed: windSpeed } = data.list[0].wind;
   const { description, icon } = data.list[0].weather[0];
   const date = formatDate(data.list[0].dt_txt);
-  const iconURL = `http://openweathermap.org/img/w/${icon}.png`;
+  const iconURL = `https://openweathermap.org/img/wn/${icon}@4x.png`;
   const hourlyForecastHTML = createHourlyForecastHTML(data.list.slice(0, 8));
   const weeklyForecastHTML = createWeeklyForecastHTML(data.list);
   displayElement.classList.remove("hidden");
@@ -94,12 +92,12 @@ const updateDisplay = (data) => {
       <span>Độ ẩm: ${humidity}%</span>
       <span>Sức gió: ${(windSpeed * 3.6).toFixed(1)} km/h</span>
     </div>
-    <img src="${iconURL}" alt="weather icon" class="w-[150px] sm:w-[200px] lg:w-[250px] h-[150px] sm:h-[200px] lg:h-[250px] translate-y-[-30px] sm:translate-y-[-40px] lg:translate-y-[-50px] object-cover" />
+    <img src="${iconURL}" alt="weather icon" class="w-[150px] sm:w-[200px] lg:w-[250px] h-[200px] sm:h-[200px] lg:h-[250px] translate-y-[-30px] sm:translate-y-[-40px] lg:translate-y-[-50px] object-cover" />
   </div>
   <div class="grid bg-purple-600 w-[90%] min-w-max lg:w-[75%] max-w-full text-sm sm:text-base lg:text-lg h-[400px] min-h-max grid-cols-3 sm:grid-cols-4 gap-4 text-center rounded-lg my-5">
     ${hourlyForecastHTML}
   </div>
-  <div class="grid bg-purple-600 w-[90%] min-w-max lg:w-[75%] max-w-full text-sm sm:text-base lg:text-lg h-[300px] min-h-max grid-cols-3 sm:grid-cols-5 gap-4 text-center rounded-lg my-5">
+  <div class="grid bg-purple-600 w-[90%] min-w-max lg:w-[75%] max-w-full text-sm sm:text-base lg:text-lg h-[300px] min-h-max grid-cols-3 sm:grid-cols-5 gap-4 text-center rounded-lg my-5 pb-5">
     ${weeklyForecastHTML}
   </div>
 `;
