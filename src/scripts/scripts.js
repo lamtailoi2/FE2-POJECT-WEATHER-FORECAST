@@ -1,7 +1,7 @@
 const searchInput = document.getElementById("city");
 const submitBtn = document.getElementById("submit");
 const displayElement = document.getElementById("display");
-
+displayElement.classList.add("hidden");
 const handleSubmit = (e) => {
   e.preventDefault();
   const location = searchInput.value.trim();
@@ -80,18 +80,18 @@ const updateDisplay = (data) => {
   const { description, icon } = data.list[0].weather[0];
   const date = formatDate(data.list[0].dt_txt);
   const iconURL = `http://openweathermap.org/img/w/${icon}.png`;
-
   const hourlyForecastHTML = createHourlyForecastHTML(data.list.slice(0, 8));
   const weeklyForecastHTML = createWeeklyForecastHTML(data.list);
+  displayElement.classList.remove("hidden");
   displayElement.innerHTML = `
     <h1 class="text-center text-white text-5xl font-bold mt-10">Weather Details</h1>
     <div class="flex justify-around my-10 items-center w-full">
-      <div class="flex flex-col text-3xl text-white gap-y-2">
-        <h2 class="font-bold text-4xl">${cityName} - ${temperature}°C</h2>
-        <span>Độ ẩm ${humidity}%</span>
-        <span>Gió ${(windSpeed * 3.6).toFixed(1)} km/h</span>
+      <div class="flex flex-col text-3xl text-[#EAEAEA] gap-y-2">
+        <h2 class="font-bold text-4xl text-white">${cityName} - ${date}</h2>
         <span>${capitalize(description)}</span>
-        <span>${date}</span>
+        <span>Nhiệt độ: ${temperature}°C</span>
+        <span>Độ ẩm: ${humidity}%</span>
+        <span>Sức gió: ${(windSpeed * 3.6).toFixed(1)} km/h</span>
       </div>
       <img src="${iconURL}" alt="weather icon" class="w-[250px] h-[250px] translate-y-[-50px] object-cover" />
     </div>
@@ -114,8 +114,8 @@ const fetchData = async (location) => {
     if (!response.ok) {
       throw new Error(`HTTP error! Status: ${response.status}`);
     }
-
     const data = await response.json();
+    console.log(data);
     updateDisplay(data);
   } catch (error) {
     console.error(error);
