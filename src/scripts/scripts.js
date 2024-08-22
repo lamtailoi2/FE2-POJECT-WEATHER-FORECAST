@@ -9,6 +9,7 @@ const handleSubmit = (e) => {
     alert("Please enter a location");
   } else {
     fetchData(location);
+    searchInput.value = "";
   }
 };
 
@@ -25,6 +26,11 @@ const formatDate = (date) => {
 const formatTime = (time) => {
   const options = { hour: "2-digit", minute: "2-digit" };
   return new Date(time).toLocaleTimeString("vi-VN", options);
+};
+
+const formatWeekday = (date) => {
+  const options = { weekday: "long" };
+  return new Date(date).toLocaleDateString("vi-VN", options);
 };
 
 const capitalize = (str) => str.charAt(0).toUpperCase() + str.slice(1);
@@ -46,6 +52,27 @@ const createHourlyForecastHTML = (forecastData) => {
     .join("");
 };
 
+const createWeeklyForecastHTML = (forecastData) => {
+  const dailyForecast = forecastData.filter((item) =>
+    item.dt_txt.includes("12:00:00")
+  );
+
+  return dailyForecast
+    .map(({ dt_txt, weather, main, wind }) => {
+      return `
+          <div class="flex flex-col items-center justify-center text-white">
+            <span>${formatWeekday(dt_txt)}</span>  <!-- Display the weekday -->
+            <img src="http://openweathermap.org/img/w/${
+              weather[0].icon
+            }.png" alt="weather icon" class="w-[50px] h-[50px] object-cover" />
+            <span>${main.temp}°C</span>
+            <span>${(wind.speed * 3.6).toFixed(1)} km/h</span>
+          </div>
+        `;
+    })
+    .join("");
+};
+
 const updateDisplay = (data) => {
   const { name: cityName } = data.city;
   const { temp: temperature, humidity } = data.list[0].main;
@@ -55,10 +82,10 @@ const updateDisplay = (data) => {
   const iconURL = `http://openweathermap.org/img/w/${icon}.png`;
 
   const hourlyForecastHTML = createHourlyForecastHTML(data.list.slice(0, 8));
-
+  const weeklyForecastHTML = createWeeklyForecastHTML(data.list);
   displayElement.innerHTML = `
     <h1 class="text-center text-white text-5xl font-bold mt-10">Weather Details</h1>
-    <div class="flex justify-around my-10 gap-x-20px">
+    <div class="flex justify-around my-10 items-center w-full">
       <div class="flex flex-col text-3xl text-white gap-y-2">
         <h2 class="font-bold text-4xl">${cityName} - ${temperature}°C</h2>
         <span>Độ ẩm ${humidity}%</span>
@@ -68,8 +95,11 @@ const updateDisplay = (data) => {
       </div>
       <img src="${iconURL}" alt="weather icon" class="w-[250px] h-[250px] translate-y-[-50px] object-cover" />
     </div>
-    <div class="grid bg-red-500 w-[70%] h-[300px] grid-cols-4 gap-x-4 text-center mx-auto">
+    <div class="grid bg-purple-600 w-[75%] h-[350px] grid-cols-4 gap-x-4 text-center rounded-lg my-5 text-lg ">
       ${hourlyForecastHTML}
+    </div>
+    <div class="grid bg-purple-600 w-[75%] h-[250px] grid-cols-5 gap-x-4 text-center rounded-lg my-5 text-lg ">
+      ${weeklyForecastHTML}
     </div>
   `;
 };
