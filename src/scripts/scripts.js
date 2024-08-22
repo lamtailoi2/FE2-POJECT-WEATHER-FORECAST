@@ -95,10 +95,10 @@ const updateDisplay = (data) => {
       </div>
       <img src="${iconURL}" alt="weather icon" class="w-[250px] h-[250px] translate-y-[-50px] object-cover" />
     </div>
-    <div class="grid bg-purple-600 w-[75%] h-[350px] grid-cols-4 gap-x-4 text-center rounded-lg my-5 text-lg ">
+    <div class="grid bg-purple-600 w-[75%] sm:w-full max-[640px]:text-sm h-[350px] grid-cols-4 gap-x-4 text-center rounded-lg my-5 text-lg ">
       ${hourlyForecastHTML}
     </div>
-    <div class="grid bg-purple-600 w-[75%] h-[250px] grid-cols-5 gap-x-4 text-center rounded-lg my-5 text-lg ">
+    <div class="grid bg-purple-600 w-[75%] sm:w-full max-[640px]:text-sm h-[250px] grid-cols-5 gap-x-4 text-center rounded-lg my-5 text-lg ">
       ${weeklyForecastHTML}
     </div>
   `;
