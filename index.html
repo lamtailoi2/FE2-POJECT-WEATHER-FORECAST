@@ -11,7 +11,9 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <title>Weather App</title>
   </head>
-  <body class="bg-purple-700 flex justify-center items-center mt-10">
+  <body
+    class="bg-purple-700 flex justify-center items-center flex-col mt-10 gap-y-5"
+  >
     <div class="w-[500px] h-full bg-purple-500 rounded-lg">
       <h1 class="text-center text-white text-5xl font-bold mt-10">
         Weather App
@@ -36,7 +38,29 @@
         </button>
       </form>
     </div>
+    <div
+      class="w-[1500px] h-full bg-purple-500 rounded-lg flex flex-col justify-center items-center"
+      id="display"
+    >
+      <!-- <h1 class="text-center text-white text-5xl font-bold mt-10">
+        Weather Details
+      </h1>
+      <div class="flex justify-around my-10 gap-x-20px">
+        <div class="flex flex-col text-3xl text-white gap-y-2">
+          <h2 class="font-bold text-4xl">Thành phố Hồ Chí Minh</h2>
+          <span>30°C</span>
+          <span>Mưa nhẹ</span>
+          <span>23/08/2024 06:00</span>
+          <span>23/08/2024 06:00</span>
+        </div>
+        <img
+          src="/src/imgs/weather-app.png"
+          alt="cloud and sun icon"
+          class="w-[250px] h-[250px] translate-y-[-50px]"
+        />
+      </div> -->
+      
+    </div>
     <script src="/src/scripts/scripts.js"></script>
-    <script src="/src/scripts/display.js"></script>
   </body>
 </html>
