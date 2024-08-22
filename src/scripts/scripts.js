@@ -51,6 +51,7 @@ const createHourlyForecastHTML = (forecastData) => {
     })
     .join("");
 };
+console.log(createHourlyForecastHTML);
 
 const createWeeklyForecastHTML = (forecastData) => {
   const dailyForecast = forecastData.filter((item) =>
@@ -95,10 +96,10 @@ const updateDisplay = (data) => {
     </div>
     <img src="${iconURL}" alt="weather icon" class="w-[150px] sm:w-[200px] lg:w-[250px] h-[150px] sm:h-[200px] lg:h-[250px] translate-y-[-30px] sm:translate-y-[-40px] lg:translate-y-[-50px] object-cover" />
   </div>
-  <div class="grid bg-purple-600 w-[90%] min-w-max lg:w-[75%] max-w-full text-sm sm:text-base lg:text-lg h-[350px] max-h-max grid-cols-3 sm:grid-cols-4 gap-4 text-center rounded-lg my-5">
+  <div class="grid bg-purple-600 w-[90%] min-w-max lg:w-[75%] max-w-full text-sm sm:text-base lg:text-lg h-[400px] min-h-max grid-cols-3 sm:grid-cols-4 gap-4 text-center rounded-lg my-5">
     ${hourlyForecastHTML}
   </div>
-  <div class="grid bg-purple-600 w-[90%] min-w-max lg:w-[75%] max-w-full text-sm sm:text-base lg:text-lg h-[250px] max-h-max grid-cols-3 sm:grid-cols-5 gap-4 text-center rounded-lg my-5">
+  <div class="grid bg-purple-600 w-[90%] min-w-max lg:w-[75%] max-w-full text-sm sm:text-base lg:text-lg h-[300px] min-h-max grid-cols-3 sm:grid-cols-5 gap-4 text-center rounded-lg my-5">
     ${weeklyForecastHTML}
   </div>
 `;
