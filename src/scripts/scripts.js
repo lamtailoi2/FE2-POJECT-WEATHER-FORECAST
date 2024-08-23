@@ -37,7 +37,7 @@ const createHourlyForecastHTML = (forecastData) => {
       return `
         <div class="flex flex-col items-center justify-center text-white">
           <span class="font-bold">${formatTime(dt_txt)}</span>
-          <img src="http://openweathermap.org/img/w/${
+          <img src="https://openweathermap.org/img/wn/${
             weather[0].icon
           }.png" alt="weather icon" class="w-[50px] h-[50px] object-cover" />
           <span>${main.temp}°C</span>
@@ -61,7 +61,7 @@ const createWeeklyForecastHTML = (forecastData) => {
             <span class="font-bold">${formatWeekday(
               dt_txt
             )}</span>  <!-- Display the weekday -->
-            <img src="http://openweathermap.org/img/w/${
+            <img src="https://openweathermap.org/img/wn/${
               weather[0].icon
             }.png" alt="weather icon" class="w-[50px] h-[50px] object-cover" />
             <span>${main.temp}°C</span>
