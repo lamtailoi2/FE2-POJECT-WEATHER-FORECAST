@@ -1,7 +1,23 @@
 const searchInput = document.getElementById("city");
 const submitBtn = document.getElementById("submit");
 const displayElement = document.getElementById("display");
+const soundButton = document.getElementById("sound-button");
+const bgMusic = document.getElementById("bg-music");
 displayElement.classList.add("hidden");
+
+const handlePlayMusic = () => {
+  bgMusic.volume = 0.5;
+  if (bgMusic.paused) {
+    bgMusic.play();
+    soundButton.classList.remove("fa-volume-mute");
+    soundButton.classList.add("fa-volume-up");
+  } else {
+    bgMusic.pause();
+    soundButton.classList.remove("fa-volume-up");
+    soundButton.classList.add("fa-volume-mute");
+  }
+};
+
 const handleSubmit = (e) => {
   e.preventDefault();
   const location = searchInput.value.trim();
@@ -63,7 +79,8 @@ const createWeeklyForecastHTML = (forecastData) => {
       const avgTemp =
         dayData.reduce((sum, item) => sum + item.main.temp, 0) / dayData.length;
       const avgWindSpeed =
-        dayData.reduce((sum, item) => sum + item.wind.speed, 0) / dayData.length;
+        dayData.reduce((sum, item) => sum + item.wind.speed, 0) /
+        dayData.length;
       const { icon } = dayData[0].weather[0];
       return {
         date,
@@ -140,3 +157,4 @@ const fetchData = async (location) => {
 };
 
 submitBtn.addEventListener("click", handleSubmit);
+soundButton.addEventListener("click", handlePlayMusic);
