@@ -47,27 +47,43 @@ const createHourlyForecastHTML = (forecastData) => {
     })
     .join("");
 };
-console.log(createHourlyForecastHTML);
 
 const createWeeklyForecastHTML = (forecastData) => {
-  const dailyForecast = forecastData.filter((item) =>
-    item.dt_txt.includes("12:00:00")
-  );
+  const map = new Map();
+  forecastData.forEach((item) => {
+    const date = item.dt_txt.split(" ")[0];
+    if (!map.has(date)) {
+      map.set(date, []);
+    }
+    map.get(date).push(item);
+  });
+  const dateArr = Array.from(map.entries());
+  const dailyForecast = dateArr
+    .map(([date, dayData]) => {
+      const avgTemp =
+        dayData.reduce((sum, item) => sum + item.main.temp, 0) / dayData.length;
+      const avgWindSpeed =
+        dayData.reduce((sum, item) => sum + item.wind.speed, 0) / dayData.length;
+      const { icon } = dayData[0].weather[0];
+      return {
+        date,
+        avgTemp: avgTemp.toFixed(1),
+        avgWindSpeed: (avgWindSpeed * 3.6).toFixed(1),
+        icon,
+      };
+    })
+    .slice(0, 5);
 
   return dailyForecast
-    .map(({ dt_txt, weather, main, wind }) => {
+    .map(({ date, avgTemp, avgWindSpeed, icon }) => {
       return `
-          <div class="flex flex-col items-center justify-center text-white">
-            <span class="font-bold">${formatWeekday(
-              dt_txt
-            )}</span>  <!-- Display the weekday -->
-            <img src="https://openweathermap.org/img/wn/${
-              weather[0].icon
-            }.png" alt="weather icon" class="w-[50px] h-[50px] object-cover" />
-            <span>${main.temp}°C</span>
-            <span>${(wind.speed * 3.6).toFixed(1)} km/h</span>
-          </div>
-        `;
+        <div class="flex flex-col items-center justify-center text-white">
+          <span class="font-bold">${formatWeekday(date)}</span> 
+          <img src="https://openweathermap.org/img/wn/${icon}.png" alt="weather icon" class="w-[50px] h-[50px] object-cover" />
+          <span>${avgTemp}°C</span> 
+          <span>${avgWindSpeed} km/h</span> 
+        </div>
+      `;
     })
     .join("");
 };
@@ -114,6 +130,7 @@ const fetchData = async (location) => {
       throw new Error(`HTTP error! Status: ${response.status}`);
     }
     const data = await response.json();
+
     console.log(data);
     updateDisplay(data);
   } catch (error) {
